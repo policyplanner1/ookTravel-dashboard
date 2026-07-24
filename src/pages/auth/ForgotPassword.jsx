@@ -30,9 +30,9 @@ export default function ForgotPassword() {
 
       <div className="w-full max-w-sm relative">
         <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-2xl px-6 py-3">
+          <Link to="/" className="bg-white rounded-2xl px-6 py-3">
             <img src={logo} alt="OOK Travel" className="h-12 w-auto object-contain" />
-          </div>
+          </Link>
         </div>
 
         <div className="bg-white rounded-3xl shadow-2xl p-8">

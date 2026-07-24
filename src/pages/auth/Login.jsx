@@ -20,6 +20,7 @@ export default function Login() {
   const [error, setError]     = useState('');
   const dispatch               = useDispatch();
   const navigate               = useNavigate();
+  const year                    = new Date().getFullYear();
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -51,9 +52,9 @@ export default function Login() {
         <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col h-full px-12 py-14">
-          <div className="bg-white rounded-2xl px-5 py-3 self-start">
+          <Link to="/" className="bg-white rounded-2xl px-5 py-3 self-start">
             <img src={logo} alt="OOK Travel" className="h-10 w-auto object-contain" />
-          </div>
+          </Link>
 
           <div className="flex-1 flex flex-col justify-center">
             <h2 className="text-4xl font-extrabold text-white leading-tight mb-4">
@@ -78,16 +79,16 @@ export default function Login() {
             </div>
           </div>
 
-          <p className="text-slate-600 text-xs">© 2025 OOK Travel. All rights reserved.</p>
+          <p className="text-slate-600 text-xs">© {year} OOK Travel. All rights reserved.</p>
         </div>
       </div>
 
       {/* Right form panel */}
       <div className="flex-1 flex flex-col items-center justify-center bg-gray-50 px-6 py-12">
         <div className="lg:hidden mb-8">
-          <div className="bg-white rounded-2xl px-6 py-3 shadow-md">
+          <Link to="/" className="bg-white rounded-2xl px-6 py-3 shadow-md inline-block">
             <img src={logo} alt="OOK Travel" className="h-12 w-auto object-contain" />
-          </div>
+          </Link>
         </div>
 
         <div className="w-full max-w-md">

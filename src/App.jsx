@@ -2,11 +2,16 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Login           from '@/pages/auth/Login';
-import ForgotPassword  from '@/pages/auth/ForgotPassword';
-import RMSignup        from '@/pages/auth/RMSignup';
-import AdminLayout     from '@/layouts/AdminLayout';
-import RMLayout        from '@/layouts/RMLayout';
+import ScrollToTop       from '@/components/common/ScrollToTop';
+import Home             from '@/pages/Home';
+import Login            from '@/pages/auth/Login';
+import ForgotPassword   from '@/pages/auth/ForgotPassword';
+import RMSignup         from '@/pages/auth/RMSignup';
+import PrivacyPolicy    from '@/pages/legal/PrivacyPolicy';
+import TermsAndConditions from '@/pages/legal/TermsAndConditions';
+import Support          from '@/pages/legal/Support';
+import AdminLayout      from '@/layouts/AdminLayout';
+import RMLayout         from '@/layouts/RMLayout';
 
 import AdminDashboard       from '@/pages/admin/Dashboard';
 import RMManagement         from '@/pages/admin/RMManagement';
@@ -32,10 +37,15 @@ function RequireAuth({ children, role }) {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
-        <Route path="/login"           element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/rm-signup"       element={<RMSignup />} />
+        <Route path="/"                     element={<Home />} />
+        <Route path="/login"                element={<Login />} />
+        <Route path="/forgot-password"      element={<ForgotPassword />} />
+        <Route path="/rm-signup"            element={<RMSignup />} />
+        <Route path="/privacy-policy"       element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/support"              element={<Support />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<RequireAuth role="admin"><AdminLayout /></RequireAuth>}>
@@ -57,8 +67,7 @@ export default function App() {
           <Route path="notifications"   element={<Notifications />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
