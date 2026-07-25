@@ -1,6 +1,6 @@
 import {
   Zap, FileSpreadsheet, Wallet, Headphones, ShieldCheck, LayoutDashboard,
-  CheckCircle2, Smartphone, Plane, FileCheck2, BadgeIndianRupee,
+  CheckCircle2, Smartphone, Plane, FileCheck2, BadgeIndianRupee, HeartPulse, Users,
 } from 'lucide-react';
 import PublicNavbar from '@/components/common/PublicNavbar';
 import Footer from '@/components/common/Footer';
@@ -46,6 +46,20 @@ const features = [
   },
 ];
 
+const travellerBenefits = [
+  { icon: HeartPulse, text: 'Medical emergency, trip cancellation, delay & baggage loss cover' },
+  { icon: Zap, text: 'Instant policy issuance with digital documents delivered right away' },
+  { icon: Headphones, text: '24/7 assistance and claims support anywhere in the world' },
+  { icon: Users, text: 'Flexible plans for solo travellers, families, and groups' },
+];
+
+const agentBenefits = [
+  { icon: Wallet, text: '15% commission on every policy, credited monthly to your account' },
+  { icon: FileSpreadsheet, text: 'Bulk policy issuance for groups with a single CSV upload' },
+  { icon: Headphones, text: 'Dedicated Relationship Manager for quotes, KYC & claims support' },
+  { icon: LayoutDashboard, text: 'Real-time dashboard to track leads, policies & earnings' },
+];
+
 const steps = [
   {
     icon: Smartphone,
@@ -80,11 +94,7 @@ export default function Home() {
         <div className="absolute top-40 -left-24 w-80 h-80 bg-red-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-6 pt-20 pb-24 text-center">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wider">
-            Powered by Policy Planner Insurance Brokers Pvt. Ltd.
-          </span>
-
-          <h1 className="mt-6 text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1]">
             Sell The Trip Secure Program.
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-600">
@@ -141,6 +151,52 @@ export default function Home() {
               <p className="mt-2 text-sm leading-relaxed text-slate-500">{text}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Benefits for travellers & agents */}
+      <section className="bg-slate-50 py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">Built for travellers and agents alike</h2>
+            <p className="mt-4 text-slate-500 leading-relaxed">
+              Whether you're travelling or growing a business, the Trip Secure Program works for you.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="rounded-3xl bg-white border border-gray-100 p-8 shadow-sm">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-5">
+                <Plane size={22} className="text-white" strokeWidth={2.2} />
+              </div>
+              <h3 className="text-xl font-extrabold text-slate-900">For Travellers</h3>
+              <p className="mt-2 text-sm text-slate-500">Complete protection for every trip, issued in minutes.</p>
+              <ul className="mt-6 space-y-4">
+                {travellerBenefits.map(({ icon: Icon, text }) => (
+                  <li key={text} className="flex items-start gap-3">
+                    <Icon size={18} className="text-orange-600 flex-shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm leading-relaxed text-slate-600">{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="rounded-3xl bg-white border border-gray-100 p-8 shadow-sm">
+              <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center mb-5">
+                <Wallet size={22} className="text-white" strokeWidth={2.2} />
+              </div>
+              <h3 className="text-xl font-extrabold text-slate-900">For Agents &amp; Partners</h3>
+              <p className="mt-2 text-sm text-slate-500">Everything you need to sell more and earn more.</p>
+              <ul className="mt-6 space-y-4">
+                {agentBenefits.map(({ icon: Icon, text }) => (
+                  <li key={text} className="flex items-start gap-3">
+                    <Icon size={18} className="text-orange-600 flex-shrink-0 mt-0.5" strokeWidth={2.2} />
+                    <span className="text-sm leading-relaxed text-slate-600">{text}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </section>
 
