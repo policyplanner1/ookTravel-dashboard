@@ -70,6 +70,13 @@ export default function RMLayout() {
             <p className="text-slate-400 text-xs truncate">{user?.email}</p>
           </div>
         </div>
+        {user?.rm_code && (
+          <div className="mt-2 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+            <p className="text-slate-400 text-[10px] font-semibold uppercase tracking-wide">Your RM Code</p>
+            <p className="text-emerald-300 text-sm font-mono font-bold tracking-widest">{user.rm_code}</p>
+            <p className="text-slate-500 text-[10px] mt-0.5">Share with agents so they assign to you at signup</p>
+          </div>
+        )}
         <button onClick={handleLogout}
           className="mt-2 flex items-center gap-2 px-3 py-2 w-full text-slate-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl text-xs font-medium transition-all">
           <LogOut size={14} />

@@ -42,6 +42,7 @@ export default function RMManagement() {
 
   const columns = [
     { key: 'full_name', label: 'Name',   render: (v, r) => <div><p className="font-medium text-gray-900">{v}</p><p className="text-xs text-gray-400">{r.email}</p></div> },
+    { key: 'rm_code',   label: 'RM Code', render: v => <span className="font-mono text-xs font-semibold text-gray-700 bg-gray-100 px-2 py-1 rounded">{v}</span> },
     { key: 'mobile',    label: 'Mobile' },
     { key: 'status',    label: 'Status', render: v => <Badge status={v} color={getStatusColor(v)} /> },
     { key: 'agent_count', label: 'Agents', render: v => <span className="font-semibold text-blue-600">{v}</span> },
