@@ -134,7 +134,7 @@ export default function RMManagement() {
         }>
         <div>
           <label className="form-label">New Password</label>
-          <input type="password" className="form-input" value={resetPwd}
+          <input type="text" className="form-input" value={resetPwd}
             onChange={e => setResetPwd(e.target.value)} placeholder="Min. 8 chars, upper+lower+number" />
         </div>
       </Modal>
