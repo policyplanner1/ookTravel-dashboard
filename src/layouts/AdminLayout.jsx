@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import {
   LayoutDashboard, Users, UserCheck, FileText, Shield,
-  DollarSign, ClipboardList, Menu, X, Bell, LogOut, ChevronDown
+  DollarSign, ClipboardList, Menu, X, Bell, Send, LogOut, ChevronDown
 } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import { logout } from '@/store/authSlice';
@@ -19,6 +19,7 @@ const navItems = [
   { to: '/admin/policies',        icon: Shield,          label: 'Policies' },
   { to: '/admin/commissions',     icon: DollarSign,      label: 'Commissions' },
   { to: '/admin/notifications',   icon: Bell,            label: 'Notifications' },
+  { to: '/admin/send-notification', icon: Send,          label: 'Send Notification' },
   { to: '/admin/audit-logs',      icon: ClipboardList,   label: 'Audit Logs' },
 ];
 

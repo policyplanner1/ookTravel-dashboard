@@ -10,7 +10,7 @@ dist/
 
 # Server config
 .htaccess
-.htaccess.production
+htaccess.production
 
 # OS
 .DS_Store
