@@ -20,6 +20,7 @@ import AdminPolicyRequests  from '@/pages/admin/PolicyRequests';
 import AdminPolicies        from '@/pages/admin/Policies';
 import CommissionManagement from '@/pages/admin/CommissionManagement';
 import AuditLogs            from '@/pages/admin/AuditLogs';
+import Reports              from '@/pages/admin/Reports';
 import AdminNotifications   from '@/pages/admin/Notifications';
 import SendNotification     from '@/pages/admin/SendNotification';
 
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="policy-requests" element={<AdminPolicyRequests />} />
           <Route path="policies"        element={<AdminPolicies />} />
           <Route path="commissions"     element={<CommissionManagement />} />
+          <Route path="reports"         element={<Reports />} />
           <Route path="audit-logs"      element={<AuditLogs />} />
           <Route path="notifications"   element={<AdminNotifications />} />
           <Route path="send-notification" element={<SendNotification />} />
