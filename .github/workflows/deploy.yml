@@ -1,63 +1,45 @@
-name: Deploy Dashboard
+name: Deploy OokTravel
 
 on:
   push:
-    branches:
-      - develop
-      - main
-  workflow_dispatch:
+    branches: [main, dev]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'development' }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - name: Set environment variables
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "SSH_USER=ooktravel" >> $GITHUB_ENV
+            echo "REMOTE_PATH=/home/ooktravel/backend" >> $GITHUB_ENV
+            echo "PM2_NAME=ooktravel-backend" >> $GITHUB_ENV
+          else
+            echo "SSH_USER=devooktravel" >> $GITHUB_ENV
+            echo "REMOTE_PATH=/home/devooktravel/backend" >> $GITHUB_ENV
+            echo "PM2_NAME=ooktravel-dev-backend" >> $GITHUB_ENV
+          fi
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.1
         with:
-          node-version: 20
-          cache: npm
+          switches: -avzr --delete
+          path: ./
+          remote_path: ${{ env.REMOTE_PATH }}
+          remote_host: 103.241.146.229
+          remote_user: ${{ env.SSH_USER }}
+          remote_key: ${{ github.ref_name == 'main' && secrets.SSH_PRIVATE_KEY_PROD || secrets.SSH_PRIVATE_KEY_DEV }}
+          exclude: "node_modules/ .git/ .github/ .env"
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Add SPA/proxy rewrite rules
-        run: cp .htaccess.production dist/.htaccess
-
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          echo "Resolving host..."
-          getent hosts "${{ secrets.SSH_HOST }}" || echo "Could not resolve SSH_HOST as a hostname (it may be a raw IP, which is fine)"
-
-          echo "Scanning host key on port ${{ secrets.SSH_PORT }}..."
-          if ! timeout 15 ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>keyscan_err.log; then
-            echo "::error::ssh-keyscan failed or timed out. This usually means SSH_HOST/SSH_PORT is wrong, or the server's firewall is blocking connections from GitHub's runner IPs."
-            cat keyscan_err.log
-            exit 1
-          fi
-          if [ ! -s ~/.ssh/known_hosts ]; then
-            echo "::error::ssh-keyscan produced no output — host did not respond on that port."
-            exit 1
-          fi
-          echo "Host key captured successfully."
-
-      - name: Sync build to server
-        run: |
-          rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT }}" \
-            dist/ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}"
-
-      - name: Clean up SSH key
-        if: always()
-        run: rm -f ~/.ssh/deploy_key
+      - name: Install deps and restart via PM2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 103.241.146.229
+          username: ${{ env.SSH_USER }}
+          key: ${{ github.ref_name == 'main' && secrets.SSH_PRIVATE_KEY_PROD || secrets.SSH_PRIVATE_KEY_DEV }}
+          script: |
+            cd ${{ env.REMOTE_PATH }}
+            npm ci --omit=dev
+            sudo /usr/local/lib/node_modules/pm2/bin/pm2 restart ${{ env.PM2_NAME }}
